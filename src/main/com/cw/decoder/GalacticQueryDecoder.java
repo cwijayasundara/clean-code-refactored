@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by cwijayasundara on 23/01/2017.
  *
- * This class has the logic to decode the inter galactic codes and prices and give out the responses.
+ * This class has the logic to decode the inter galactic codes and prices and print out the responses.
  *
  */
 
@@ -50,7 +50,11 @@ public class GalacticQueryDecoder {
         }
         return isOk;
     }
-    // private method to print the output
+
+    /*
+     * private method to print the output. Not really happy with methods that are void/unit as these have side effects
+     * than just taking an input and return an output.
+     */
     private void printOutput(GalacticQuery query, StringBuilder consolidatedRomanCodes,
                              StringBuilder consolidatedGalacticCodes,
                              List<GalacticCode> galacticCodes) {
@@ -71,7 +75,11 @@ public class GalacticQueryDecoder {
         }
     }
 
-    private void decodeQueriesWithMetals(GalacticQuery query, StringBuilder consolidatedRomanCodes, StringBuilder consolidatedGalacticCodes) {
+    /*
+     * Private method of printOutput to handle the Galactic queries with Metals inside it.
+     */
+    private void decodeQueriesWithMetals(GalacticQuery query, StringBuilder consolidatedRomanCodes,
+                                         StringBuilder consolidatedGalacticCodes) {
         int intValue = numberConverter.convert(consolidatedRomanCodes.toString());
         Metal metal = query.getMetal();
         float unitPrice = metal.getUnitPrice();

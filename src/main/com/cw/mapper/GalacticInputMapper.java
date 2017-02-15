@@ -57,7 +57,7 @@ public class GalacticInputMapper {
         return fileReaderUtil.readFile(filePath);
     }
 
-    /* This method returns a Map<String, String> containing values like {tegj=L, glob=I, prok=V, pish=X}
+    /* This method returns a List<GalacticCode> containing values like {tegj=L, glob=I, prok=V, pish=X}
      * <b>Expect the records to be of <code> <is> <roman char> format eg: glob is I </b>
      */
     public List<GalacticCode> mapInputToGalacticCodes(){
@@ -68,7 +68,7 @@ public class GalacticInputMapper {
 
         while(itr.hasNext()){
             String line =(String) itr.next();
-            String token[]= line.split(regExPattern); // split the line to tokens
+            String token[]= line.split(regExPattern);
             if(token.length ==3 && (token[1].equalsIgnoreCase(codeTokenStr))){
                 GalacticCode galacticCode = new GalacticCode(token[0],token[token.length -1].charAt(0));
                 galacticCodes.add(galacticCode);
@@ -77,7 +77,7 @@ public class GalacticInputMapper {
         return galacticCodes;
     }
 
-    /* This method returns a map of <metal, price-in-decimal>
+    /* This method returns a List<Metal>
      * Expect the records to be of <b>format : <code> <code> <metal> <is> <value> <credits> format </b>
      * eg : glob glob Silver is 34 Credits
      */
@@ -105,7 +105,8 @@ public class GalacticInputMapper {
     }
 
     // helper method of getMetalPriceInDec
-    private void extractRomanNumaralOfCost(List<GalacticCode> galacticCodes, String[] token, StringBuffer valueInRomanStr) {
+    private void extractRomanNumaralOfCost(List<GalacticCode> galacticCodes, String[] token,
+                                           StringBuffer valueInRomanStr) {
         for (String tok: token) {
             Iterator galCodeitr = galacticCodes.iterator();
             while(galCodeitr.hasNext()){
@@ -117,7 +118,7 @@ public class GalacticInputMapper {
         }
     }
 
-    /* This method returns a Map<String, List<String>> with valid queries and invalid queries>
+    /* This method returns a List<GalacticQuery>
      * The logic to determine a valid query vs an invalid query is as below.
      * if a line contains a valid <code> like pish or glob that maps to a Roman letter then its a valid query
      * Else if a line does not contain any valid code its an invalid query
